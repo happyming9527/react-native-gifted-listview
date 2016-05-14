@@ -333,9 +333,9 @@ var GiftedListView = React.createClass({
     if (num == 0) {
       view = list
     } else if (num == 1) {
-      view = this.props.firstLoadingView
+      view = this.props.firstLoadingView||list
     } else if (num == -1) {
-      view = this.props.firstLoadedErrorView
+      view = this.props.firstLoadedErrorView||list
     }
     return view
   },
