@@ -197,7 +197,11 @@ var GiftedListView = React.createClass({
   },
 
   componentDidMount() {
-    this.props.onFetch(this._getPage(), this._postRefresh, {firstLoad: true});
+    this.firstFetch()
+  },
+
+  firstFetch() {
+    this.props.onFetch(1, this._postRefresh, {firstLoad: true});
   },
 
   setNativeProps(props) {
@@ -214,7 +218,7 @@ var GiftedListView = React.createClass({
         isRefreshing: true,
       });
       this._setPage(1);
-      this.props.onFetch(this._getPage(), this._postRefresh, options);
+      this.props.onFetch(null, this._postRefresh, options);
     }
   },
 
@@ -301,12 +305,6 @@ var GiftedListView = React.createClass({
     );
   },
 
-  setFirstLoaded(boolean) {
-    this.setState({
-      firstLoaded: boolean
-    })
-  },
-
   render() {
     let list = (
       <ListView
@@ -327,7 +325,19 @@ var GiftedListView = React.createClass({
         style={this.props.style}
       />
     )
-    return this.state.firstLoaded ? list:(this.props.firstLoadingView ? this.props.firstLoadingView:list)
+
+    let num = this.props.firstLoading == null ? 1:this.props.firstLoading
+
+    let view
+
+    if (num == 0) {
+      view = list
+    } else if (num == 1) {
+      view = this.props.firstLoadingView
+    } else if (num == -1) {
+      view = this.props.firstLoadedErrorView
+    }
+    return view
   },
 
   defaultStyles: {
