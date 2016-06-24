@@ -279,10 +279,10 @@ var GiftedListView = React.createClass({
       return this.paginationFetchingView();
     } else if (this.state.paginationStatus === 'waiting' && this.props.pagination === true && (this.props.withSections === true || this._getRows().length > 0)) {
       return this.paginationWaitingView(this._onPaginate);
+    }  else if (this._getRows().length === 0) {
+      return this.emptyView(this._onRefresh);
     } else if (this.state.paginationStatus === 'allLoaded' && this.props.pagination === true) {
       return this.paginationAllLoadedView();
-    } else if (this._getRows().length === 0) {
-      return this.emptyView(this._onRefresh);
     } else {
       return null;
     }
