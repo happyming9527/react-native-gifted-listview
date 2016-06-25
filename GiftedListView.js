@@ -251,7 +251,7 @@ var GiftedListView = React.createClass({
         newRows[index] = row
       }
     }
-    this._updateRows(newRows, {});
+    this._updateRows(newRows, {allLoaded: this.state.paginationStatus === 'allLoaded'});
   },
 
   _postPaginate(rows = [], options = {}) {
@@ -296,7 +296,7 @@ var GiftedListView = React.createClass({
       return this.paginationWaitingView(this._onPaginate);
     }  else if (this._getRows().length === 0) {
       return this.emptyView(this._onRefresh);
-    }else if (this.state.paginationStatus === 'allLoaded' && this.props.pagination === true) {
+    } else if (this.state.paginationStatus === 'allLoaded' && this.props.pagination === true) {
       return this.paginationAllLoadedView();
     } else {
       return null;
