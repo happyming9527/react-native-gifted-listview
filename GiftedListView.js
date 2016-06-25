@@ -239,6 +239,21 @@ var GiftedListView = React.createClass({
     }
   },
 
+  _changeRow(row, type) {
+    let rows = this._getRows()
+    let newRows
+    if (type == 'delete') {
+      newRows = rows.filter((ele)=> ele.id!==row.id )
+    } else if (type == 'modify') {
+      let index = rows.findIndex((ele)=> ele.id==row.id )
+      if (index>=0) {
+        newRows = rows.concat()
+        newRows[index] = row
+      }
+    }
+    this._updateRows(newRows, {});
+  },
+
   _postPaginate(rows = [], options = {}) {
     this._setPage(this._getPage() + 1);
     var mergedRows = null;
@@ -281,7 +296,7 @@ var GiftedListView = React.createClass({
       return this.paginationWaitingView(this._onPaginate);
     }  else if (this._getRows().length === 0) {
       return this.emptyView(this._onRefresh);
-    } else if (this.state.paginationStatus === 'allLoaded' && this.props.pagination === true) {
+    }else if (this.state.paginationStatus === 'allLoaded' && this.props.pagination === true) {
       return this.paginationAllLoadedView();
     } else {
       return null;
